@@ -1,0 +1,28 @@
+@font-face {
+  font-family:'Nana';
+  src: url('./assets/font/Nana.ttf');
+  
+}
+
+
+:root {
+  --color-main: rgb(255, 230, 234);
+}
+
+
+body {
+  margin: 0;
+  font-family: 'Nana';
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* background-color: rgb(255, 201, 210); */
+  background-color: var(--color-main);
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
