@@ -44,11 +44,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         User user;
 
         if (userOptional.isPresent()) {		// 이미 가입된 경우
-            user = userOptional.get();
-            if (authProvider != user.getAuthProvider()) {
                 throw new OAuthProcessingException("Wrong Match Auth Provider");
-            }
-
         } else {			// 가입되지 않은 경우
             user = createUser(userInfo, authProvider);
         }

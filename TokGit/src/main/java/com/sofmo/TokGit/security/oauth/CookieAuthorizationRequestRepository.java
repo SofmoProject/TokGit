@@ -1,5 +1,6 @@
 package com.sofmo.TokGit.security.oauth;
 
+import com.nimbusds.oauth2.sdk.util.StringUtils;
 import com.sofmo.TokGit.util.CookieUtil;
 import org.springframework.security.oauth2.client.web.AuthorizationRequestRepository;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;

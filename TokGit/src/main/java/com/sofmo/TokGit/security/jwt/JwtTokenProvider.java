@@ -33,7 +33,7 @@ public class JwtTokenProvider {
     @Autowired
     private UserRepository userRepository;
 
-    public JwtTokenProvider(@Value("${app.auth.token.secret-key}")String secretKey, @Value("${app.auth.token.refresh-cookie-key}")String cookieKey) {
+    public JwtTokenProvider(@Value("${properties.auth.token.secretKey}")String secretKey, @Value("${properties.auth.token.refreshCookieKey}")String cookieKey) {
         this.SECRET_KEY = Base64.getEncoder().encodeToString(secretKey.getBytes());
         this.COOKIE_REFRESH_TOKEN_KEY = cookieKey;
     }
@@ -98,7 +98,7 @@ public class JwtTokenProvider {
                 Arrays.stream(claims.get(AUTHORITIES_KEY).toString().split(","))
                         .map(SimpleGrantedAuthority::new).collect(Collectors.toList());
 
-        CustomUserDetails principal = new CustomUserDetails(Long.valueOf(claims.getSubject()), "", authorities);
+        CustomUserDetails principal = new CustomUserDetails(Long.valueOf(claims.getSubject()), "");
 
         return new UsernamePasswordAuthenticationToken(principal, "", authorities);
     }
