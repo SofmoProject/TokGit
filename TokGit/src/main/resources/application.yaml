@@ -1,0 +1,40 @@
+spring:
+  application:
+    name: TokGit
+  jpa:
+    hibernate:
+      naming:
+        implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+      ddl-auto: create-drop
+    show-sql: 'true'
+    properties:
+      hibernate:
+        format_sql: 'true'
+  datasource:
+    password: ${properties.database.password}
+    username: ${properties.database.username}
+    url: jdbc:mysql://${properties.database.url}:3306/tokgit?characterEncoding=UTF-8&serverTimezone=Asia/Seoul
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            clientId: ${properties.github.clientId}
+            clientSecret: ${properties.github.clientSecret}
+            scope: user
+  data:
+    web:
+      pageable:
+        one-indexed-parameters: 'true'
+server:
+  port: ${properties.server.port}
+
+
+app:
+  auth:
+    token:
+      secret-key: ${properties.auth.token.secretKey}
+      refresh-cookie-key: ${properties.auth.token.refreshCookieKey}
+  oauth2:
+    authorizedRedirectUri: "http://localhost:3000/oauth2/redirect"

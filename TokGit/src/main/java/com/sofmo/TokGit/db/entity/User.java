@@ -1,29 +1,37 @@
 package com.sofmo.TokGit.db.entity;
 
-import lombok.Getter;
-import lombok.Setter;
-import org.hibernate.annotations.DynamicInsert;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import lombok.*;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Entity
 @Getter
-@Setter
-@DynamicInsert
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Entity
 public class User {
     @Id
-    @Column(name = "user_id")
-    private String userId; // Email or github id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id; // id
+
+    @Column(unique = true, nullable = false, name = "user_email")
+    private String userEmail;
 
     @Column(name = "user_name")
     private String userName; // user name
 
     @Column(name = "user_nick")
     private String nickName; // user nickname
+
+    @Column(name = "user_img")
+    private String img;
+
+    @Column(name = "github_url")
+    private String githubUrl;
+
+    @Column(name = "refresh_token")
+    private String refreshToken;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt; // 생성일
@@ -33,6 +41,7 @@ public class User {
 
     @OneToOne(mappedBy = "user")
     private Characters character;
+
 
 
 }
