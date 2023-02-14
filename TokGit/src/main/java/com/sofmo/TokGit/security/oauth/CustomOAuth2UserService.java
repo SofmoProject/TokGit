@@ -35,16 +35,20 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     // 획득한 유저정보를 Java Model과 맵핑하고 프로세스 진행
     private OAuth2User process(OAuth2UserRequest oAuth2UserRequest, OAuth2User oAuth2User) {
         AuthProvider authProvider = AuthProvider.valueOf(oAuth2UserRequest.getClientRegistration().getRegistrationId().toUpperCase());
-        OAuth2UserInfo userInfo = OAuth2UserInfoFactory.getOAuth2UserInfo(oAuth2User.getAttributes());
+        OAuth2UserInfo userInfo = OAuth2UserInfoFactory.getOAuth2UserInfo(authProvider, oAuth2User.getAttributes());
 
-        if (userInfo.getEmail().isEmpty()) {
-            throw new OAuthProcessingException("Email not found from OAuth2 provider");
+        if (userInfo.getId().isEmpty()) {
+            throw new OAuthProcessingException("Id not found from OAuth2 provider");
         }
-        Optional<User> userOptional = userRepository.findByUserEmail(userInfo.getEmail());
+        Optional<User> userOptional = userRepository.findByUserOAuthId(userInfo.getId());
         User user;
 
         if (userOptional.isPresent()) {		// 이미 가입된 경우
+            user = userOptional.get();
+            if (authProvider != user.getAuthProvider()) {
                 throw new OAuthProcessingException("Wrong Match Auth Provider");
+            }
+
         } else {			// 가입되지 않은 경우
             user = createUser(userInfo, authProvider);
         }
@@ -53,8 +57,10 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
     private User createUser(OAuth2UserInfo userInfo, AuthProvider authProvider) {
         User user = User.builder()
-                .userEmail(userInfo.getEmail())
+                .userOAuthId(userInfo.getId())
+                .userName(userInfo.getLogin())
                 .img(userInfo.getImageUrl())
+                .authProvider(authProvider)
                 .build();
         return userRepository.save(user);
     }

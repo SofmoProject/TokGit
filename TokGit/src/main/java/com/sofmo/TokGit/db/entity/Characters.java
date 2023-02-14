@@ -12,7 +12,7 @@ import static javax.persistence.FetchType.LAZY;
 @Getter
 @Setter
 @DynamicInsert
-public class Characters {
+public class Characters extends BaseTimeEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

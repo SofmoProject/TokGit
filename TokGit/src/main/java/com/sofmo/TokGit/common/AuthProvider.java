@@ -1,5 +1,8 @@
 package com.sofmo.TokGit.common;
 
-public enum AuthProvider {
+import lombok.Getter;
 
+@Getter
+public enum AuthProvider {
+    GITHUB
 }

@@ -18,7 +18,7 @@ public class UserController {
 
     private final UserRepository userRepository;
 
-    @GetMapping("/me")
+    @GetMapping("/")
     public User getCurrentUser(@AuthenticationPrincipal CustomUserDetails user) {
         return userRepository.findById(user.getId()).orElseThrow(() -> new IllegalStateException("not found user"));
     }

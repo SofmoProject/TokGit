@@ -12,13 +12,13 @@ import java.util.Map;
 @Getter
 public class CustomUserDetails implements UserDetails, OAuth2User {
     private Long id;
-    private String email;
+    private String userOAuthId;
     private Collection<? extends GrantedAuthority> authorities;
     private Map<String, Object> attributes;
 
-    public CustomUserDetails(Long id, String email) {
+    public CustomUserDetails(Long id, String userOAuthId) {
         this.id = id;
-        this.email = email;
+        this.userOAuthId = userOAuthId;
 
     }
 
@@ -26,7 +26,7 @@ public class CustomUserDetails implements UserDetails, OAuth2User {
 
         return new CustomUserDetails(
                 user.getId(),
-                user.getUserEmail()
+                user.getUserOAuthId()
         );
     }
 
@@ -44,7 +44,7 @@ public class CustomUserDetails implements UserDetails, OAuth2User {
 
     @Override
     public String getUsername() {
-        return email;
+        return userOAuthId;
     }
 
     @Override

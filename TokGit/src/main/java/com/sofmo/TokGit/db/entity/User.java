@@ -1,5 +1,6 @@
 package com.sofmo.TokGit.db.entity;
 
+import com.sofmo.TokGit.common.AuthProvider;
 import lombok.*;
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -10,18 +11,18 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @Entity
-public class User {
+public class User extends BaseTimeEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id; // id
 
-    @Column(unique = true, nullable = false, name = "user_email")
+    @Column(unique = true, nullable = false)
+    private String userOAuthId;
+
     private String userEmail;
 
-    @Column(name = "user_name")
     private String userName; // user name
 
-    @Column(name = "user_nick")
     private String nickName; // user nickname
 
     @Column(name = "user_img")
@@ -30,14 +31,11 @@ public class User {
     @Column(name = "github_url")
     private String githubUrl;
 
+    @Enumerated(EnumType.STRING)
+    private AuthProvider authProvider;
+
     @Column(name = "refresh_token")
     private String refreshToken;
-
-    @Column(name = "created_at")
-    private LocalDateTime createdAt; // 생성일
-
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt; // 수정일
 
     @OneToOne(mappedBy = "user")
     private Characters character;

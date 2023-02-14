@@ -37,4 +37,4 @@ app:
       secret-key: ${properties.auth.token.secretKey}
       refresh-cookie-key: ${properties.auth.token.refreshCookieKey}
   oauth2:
-    authorizedRedirectUri: "http://localhost:3000/oauth2/redirect"
+    authorizedRedirectUri: "http://localhost:3000/login"
